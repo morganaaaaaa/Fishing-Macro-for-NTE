@@ -122,41 +122,48 @@ class NTEFishingBot:
         self._roi_button: dict = dict(cfg.roi.button)
         self._roi_bar: dict = dict(cfg.roi.bar)
         self._roi_error: dict = {}
-        self._bait_error_count = 0
-        self._lost_frames = 0
-        self._lost_cursor_frames = 0
-        self._lost_target_frames = 0
-        self._fish_count = 0
-        self._screen_w = 0
-        self._screen_h = 0
-        self._mon_x = 0
-        self._mon_y = 0
-        self._current_scale = 1.0
-        self._scaled_min_area = 30.0
-        self._scaled_blue_pixels = 300
-        self._scaled_error_white_min = 1200
 
-        self._last_pid_out = 0.0
-        self._cursor_x_rel = None
-        self._target_x_rel = None
-        self._session_start = time.time()
-        self._is_paused = False
-        self._stop_flag = False
-        self._stop_event = threading.Event()
-        self._is_stopped = True
-        self._fps = 0.0
-        self._last_time = time.time()
-        self._last_action = "NONE"
-        self._consecutive_waiting_timeouts = 0
+        self._screen_w: int = 0
+        self._screen_h: int = 0
+        self._mon_x: int = 0
+        self._mon_y: int = 0
+        self._current_scale: float = 1.0
+        self._scaled_min_area: float = 30.0
+        self._scaled_blue_pixels: int = 300
+        self._scaled_error_white_min: int = 1200
 
+        self._bait_error_count: int = 0
+        self._lost_frames: int = 0
+        self._lost_cursor_frames: int = 0
+        self._lost_target_frames: int = 0
+        self._fish_count: int = 0
+        self._consecutive_waiting_timeouts: int = 0
+
+        self._last_pid_out: float = 0.0
+        self._cursor_x_rel: float | None = None
+        self._target_x_rel: float | None = None
+
+      # uhhh i forgot
+        self._session_start: float = time.time()
+        self._last_time: float = time.time()
+        self._fps: float = 0.0
+        self._is_paused: bool = False
+        self._stop_flag: bool = False
+        self._stop_event: threading.Event = threading.Event()
+        self._is_stopped: bool = True
+        self._last_action: str = "NONE"
+
+        # metadata for this fish
         self._last_fish_name: str = ""
         self._last_fish_weight_g: str = ""
 
-        self._log("Bot initialized.")
+        # just for logging
         self._csv_handle = None
         self._csv_writer = None
         sessions_dir = os.path.join(APP_DIR, "sessions")
         self._session_manager = SessionManager(sessions_dir=sessions_dir)
+
+        self._log("Bot initialized.")
 
     @property
     def is_stopped(self) -> bool:
